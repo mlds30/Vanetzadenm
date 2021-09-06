@@ -150,6 +150,7 @@ int main(int argc, const char** argv)
                 std::unique_ptr<BenchmarkApplication> benchmark {
                     new BenchmarkApplication(io_service)
                 };
+                benchmark->print_received_message(vm.count("print-rx-cam") > 0);
                 apps.emplace(app_name, std::move(benchmark));
             } else {
                 std::cerr << "skip unknown application '" << app_name << "'\n";

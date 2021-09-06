@@ -13,6 +13,7 @@ public:
     PortType port() override;
     void indicate(const DataIndication&, UpPacketPtr) override;
     Application::PromiscuousHook* promiscuous_hook() override;
+    void print_received_message(bool flag);
 
 private:
     void schedule_timer();
@@ -22,6 +23,8 @@ private:
     boost::asio::steady_timer m_timer;
     std::chrono::milliseconds m_interval;
     unsigned m_received_messages;
+    bool print_rx_msg_ = false;
+    
 };
 
 #endif /* BENCHMARK_APPLICATION_HPP_EUIC2VFR */
