@@ -9,6 +9,7 @@ if(NOT TARGET Boost::program_options)
 endif()
 
 find_package(Threads REQUIRED)
+find_package(Mosquitto REQUIRED)
 
 add_executable(socktap
     application.cpp
@@ -27,7 +28,7 @@ add_executable(socktap
     udp_link.cpp
 )
 
-target_link_libraries(socktap PUBLIC Boost::system Boost::program_options Threads::Threads vanetza)
+target_link_libraries(socktap PUBLIC Boost::system Boost::program_options Threads::Threads vanetza mosquitto)
 install(TARGETS socktap EXPORT ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 option(SOCKTAP_WITH_COHDA_LLC "Use Cohda LLC API for socktap" ${COHDA_FOUND})

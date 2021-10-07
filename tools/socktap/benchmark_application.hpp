@@ -5,6 +5,15 @@
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/steady_timer.hpp>
 #include <chrono>
+#include <mosquitto.h>
+#include <signal.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+#include <sys/types.h>
+#include <time.h>
+#include <unistd.h>
 
 class BenchmarkApplication : public Application, private Application::PromiscuousHook
 {
@@ -14,6 +23,8 @@ public:
     void indicate(const DataIndication&, UpPacketPtr) override;
     Application::PromiscuousHook* promiscuous_hook() override;
     void print_received_message(bool flag);
+    struct mosquitto *mosq;
+    int connetti(char* payload);
 
 private:
     void schedule_timer();

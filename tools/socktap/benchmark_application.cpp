@@ -5,8 +5,36 @@
 #include <vanetza/asn1/packet_visitor.hpp>
 #include <vanetza/facilities/cam_functions.hpp>
 #include <boost/units/cmath.hpp>
+#include <exception>
+#include <functional>
+#include <mosquitto.h>
+#include <signal.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+#include <sys/types.h>
+#include <time.h>
+#include <unistd.h>
 
 // Benchmark application counts all incoming messages and calculates the message rate.
+
+/*
+ *  Indirizzo host del Broker
+ */ 
+#define mqtt_host "broker.hivemq.com"
+
+/*
+ * Porta di connesssione del Broker standard 1883
+ */ 
+#define mqtt_port 1883
+
+// This is a very simple CA application sending CAMs at a fixed rate.
+
+
+// Benchmark application counts all incoming messages and calculates the message rate.
+struct mosquitto *mosq;
+static int run = 1;
 
 using namespace std::chrono;
 using namespace vanetza;
@@ -35,13 +63,17 @@ void BenchmarkApplication::tap_packet(const DataIndication& indication, const Up
 
     std::cout << "CAM application received a packet with " << (cam ? "decodable" : "broken") << " content" << std::endl;
     if (cam && print_rx_msg_) {
+		int n= 0;
         std::cout << "Received CAM contains\n";
-        print_indented(std::cout, *cam, "  ", 1);
+       // print_indented(std::cout, *cam, "  ", 1);
         std::stringstream ss;
-        //print_intedented(ss, *cam, "   ",1);
-        char test[256];
-        ss.get(test,256);
-        printf("%s1n",test);
+        print_indented(ss, *cam, "  ", 1);
+        char test[850];
+        ss.read(test,850);
+        printf("%s\n",test);
+        
+        connetti(test);
+
     }
 	
     ++m_received_messages;
@@ -70,7 +102,84 @@ void BenchmarkApplication::on_timer(const boost::system::error_code& ec)
     schedule_timer();
 }
 
+void  connect_callback(struct mosquitto *mosq, void *obj, int result) 
+{
+    printf("callback, connected with return code  rc=%d\n", result);
+}
+
+void publish_callback(struct mosquitto *mosq, void *userdata, int mid) 
+{
+    
+    printf("message published\n");
+    
+    /* 
+     * Dopo l'invio del messaggio ci disconnettiamo dal server
+     */
+    mosquitto_disconnect(mosq); 
+}
+
+void handle_signal(int s) 
+{
+    run = 0;
+    printf("Signal Handler\n");
+}
+
+int BenchmarkApplication::connetti(char*payload){
+	
+	char id[24];
+    
+    char* topic = "test/topic";
+ 
+    struct mosquitto *mosq;
+    int rc = 0;
+  
+
+    signal(SIGINT, handle_signal);
+    signal(SIGTERM, handle_signal);
+
+    mosquitto_lib_init(); 
+
+    memset(id, 0, 24);
+    snprintf(id, 23, "%d", getpid());
+
+    mosq = mosquitto_new(id, true, 0); 
+    
+		if(mosq){
+			
+
+        mosquitto_connect_callback_set(mosq, connect_callback); 
+       
+        mosquitto_publish_callback_set(mosq, publish_callback);
+
+        rc = mosquitto_connect(mosq, mqtt_host, mqtt_port, 15);
+	
+        mosquitto_publish(mosq,NULL,topic,strlen(payload),(void*)payload,1,false);  
+        
+        mosquitto_disconnect(mosq); 
+        
+       
+        
+       //sleep(60);
+        
+        
+        
+           // printf("LOOP, rc=%d\n", rc);
+          
+            if(run && rc){
+                printf("connection error!\n");
+                sleep(5);
+                
+            }
+    }
+     mosquitto_publish_callback_set(mosq, publish_callback);
+    mosquitto_disconnect(mosq); 
+  
+    return rc;
+}
+
 void BenchmarkApplication::print_received_message(bool flag)
 {
+   
     print_rx_msg_ = flag;
+    
 }
