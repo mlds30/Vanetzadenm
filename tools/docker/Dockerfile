@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libcrypto++-dev \
     libgeographic-dev \
     libssl-dev \
+    libmosquitto-dev \
     && rm -rf /var/lib/apt/lists/*
 COPY build_and_run_tests.sh /usr/local/bin/build_and_run_tests.sh
 RUN useradd -m build-user
