@@ -26,6 +26,7 @@ add_executable(socktap
     security.cpp
     time_trigger.cpp
     udp_link.cpp
+    denm_application.cpp
 )
 
 target_link_libraries(socktap PUBLIC Boost::system Boost::program_options Threads::Threads vanetza mosquitto)
