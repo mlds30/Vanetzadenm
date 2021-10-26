@@ -48,9 +48,9 @@ void print_indented(std::ostream& os, const asn1::Denm& message, const std::stri
     prefix("Sequence Number") << management.actionID.sequenceNumber << "\n";
     long temp;
     asn_INTEGER2long((INTEGER_t*)&management.detectionTime,&temp);
-    prefix("Detection time") <<temp<< "\n";
+    prefix("Detection time") <<std::asctime(std::localtime(&temp))<< "\n";
     asn_INTEGER2long((INTEGER_t*)&management.referenceTime,&temp);
-    prefix("Reference time") << temp << "\n";
+    prefix("Reference time") <<  std::asctime(std::localtime(&temp)) << "\n";
     
     
     //prefix("Reference time") << temptime << "\n";

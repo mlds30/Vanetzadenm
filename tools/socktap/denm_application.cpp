@@ -82,8 +82,9 @@ void DenmApplication::on_timer(Clock::time_point)
         return;
     }
 
-    const auto time_now = duration_cast<milliseconds>(runtime_.now().time_since_epoch());
-    uint16_t gen_delta_time = time_now.count();
+    //const auto time_now = duration_cast<milliseconds>(runtime_.now().time_since_epoch());
+    const auto time_now  = duration_cast<seconds>(system_clock::now().time_since_epoch());
+    uint64_t gen_delta_time = time_now.count();
     ManagementContainer_t& management = denm.management;
     management.actionID.originatingStationID = 1;
     management.actionID.sequenceNumber = 2220;
@@ -103,7 +104,7 @@ void DenmApplication::on_timer(Clock::time_point)
     */
     //memcpy(&management.referenceTime, &gen_delta_time, sizeof(time_now));
     int ret1 =  asn_uint642INTEGER((INTEGER_t*)&management.referenceTime, gen_delta_time);
-    int ret2 =  asn_uint642INTEGER((INTEGER_t*)&management.detectionTime, TimestampIts_utcStartOf2004);
+    int ret2 =  asn_uint642INTEGER((INTEGER_t*)&management.detectionTime, gen_delta_time);
     assert(ret1+ret2==0);
     management.eventPosition.latitude = Latitude_unavailable;
     management.eventPosition.longitude = Longitude_unavailable;
