@@ -73,4 +73,3 @@ asn_TYPE_descriptor_t asn_DEF_RoadSegmentID = {
 	0, 0,	/* No members */
 	0	/* No specifics */
 };
-

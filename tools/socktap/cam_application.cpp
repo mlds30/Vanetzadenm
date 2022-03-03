@@ -109,7 +109,7 @@ void CamApplication::on_timer(Clock::time_point)
     bvc.curvatureCalculationMode = CurvatureCalculationMode_yawRateUsed;
 
     bvc.yawRate.yawRateValue = YawRateValue_unavailable;
-
+    std::cout << basic.referencePosition.longitude << "\n";
     std::string error;
     if (!message.validate(error)) {
         throw std::runtime_error("Invalid high frequency CAM: %s" + error);

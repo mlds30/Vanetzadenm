@@ -17,6 +17,8 @@
 #include "PosConfidenceEllipse.h"
 #include "Altitude.h"
 #include "constr_SEQUENCE.h"
+#include "RoadSegmentReferenceID.h"
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -28,7 +30,7 @@ typedef struct ReferencePosition {
 	Longitude_t	 longitude;
 	PosConfidenceEllipse_t	 positionConfidenceEllipse;
 	Altitude_t	 altitude;
-	
+	RoadSegmentReferenceID_t roadSegmentReferenceID;
 	/* Context for parsing across buffer boundaries */
 	asn_struct_ctx_t _asn_ctx;
 } ReferencePosition_t;

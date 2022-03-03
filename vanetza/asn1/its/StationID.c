@@ -34,7 +34,7 @@ static asn_oer_constraints_t asn_OER_type_StationID_constr_1 CC_NOTUSED = {
 #endif  /* !defined(ASN_DISABLE_OER_SUPPORT) */
 #if !defined(ASN_DISABLE_UPER_SUPPORT) || !defined(ASN_DISABLE_APER_SUPPORT)
 asn_per_constraints_t asn_PER_type_StationID_constr_1 CC_NOTUSED = {
-	{ APC_CONSTRAINED,	 32, -1,  0,  4294967295 }	/* (0..4294967295) */,
+	{ APC_CONSTRAINED,	 32, -1,  0,  429496729500 }	/* (0..4294967295) */,
 	{ APC_UNCONSTRAINED,	-1, -1,  0,  0 },
 	0, 0	/* No PER value map */
 };

@@ -58,13 +58,13 @@ Application::PromiscuousHook* BenchmarkApplication::promiscuous_hook()
     return this;
 }
 /*
-void BenchmarkApplication::tap_packetc(const DataIndication& indication, const UpPacket& packet)
+void BenchmarkApplication::tap_packet(const DataIndication& indication, const UpPacket& packet)
 {
 	asn1::PacketVisitor<asn1::Cam> visitor;
     std::shared_ptr<const asn1::Cam> cam = boost::apply_visitor(visitor, packet);
 
     std::cout << "CAM application received a packet with " << (cam ? "decodable" : "broken") << " content" << std::endl;
-    if (cam && print_rx_msg_c) {
+    if (cam && print_rx_msg_) {
      std::cout << "ok";
 		int n= 0;
         std::cout << "Received CAM contains\n";
@@ -77,18 +77,15 @@ void BenchmarkApplication::tap_packetc(const DataIndication& indication, const U
         
         connetti(test);
 
-    } 
-    ++m_received_messages;
-    }*/
+    } */
     
    void BenchmarkApplication::tap_packet(const DataIndication& indication, const UpPacket& packet)
 {
 	asn1::PacketVisitor<asn1::Denm> visitor;
     std::shared_ptr<const asn1::Denm> denm = boost::apply_visitor(visitor, packet);
 
-    
-    if (denm && print_rx_msg_d) {
     std::cout << "DENM application received a packet with " << (denm ? "decodable" : "broken") << " content" << std::endl;
+    if (denm && print_rx_msg_) {
    std::cout << "ok";
 		int n= 0;
         std::cout << "Received Denm contains\n";
@@ -102,31 +99,6 @@ void BenchmarkApplication::tap_packetc(const DataIndication& indication, const U
         connetti(test);
 
     }
-    
-    asn1::PacketVisitor<asn1::Cam> visitorc;
-    std::shared_ptr<const asn1::Cam> cam = boost::apply_visitor(visitorc, packet);
-
-    
-    if (cam && print_rx_msg_c) {
-    std::cout << "CAM application received a packet with " << (cam ? "decodable" : "broken") << " content" << std::endl;
-     std::cout << "ok";
-		int n= 0;
-        std::cout << "Received CAM contains\n";
-       // print_indented(std::cout, *cam, "  ", 1);
-        std::stringstream ss;
-        print_indented(ss, *cam, "  ", 1);
-        char test[850];
-        ss.read(test,850);
-        printf("%s\n",test);
-        
-        connetti(test);
-
-    } 
-    
-    
-    
-    
-    
 	
     ++m_received_messages;
 }
@@ -229,16 +201,9 @@ int BenchmarkApplication::connetti(char*payload){
     return rc;
 }
 
-void BenchmarkApplication::print_received_messagec(bool flag)
+void BenchmarkApplication::print_received_message(bool flag)
 {
    
-    print_rx_msg_c = flag;
-    
-}
-
-void BenchmarkApplication::print_received_messaged(bool flag)
-{
-   
-    print_rx_msg_d = flag;
+    print_rx_msg_ = flag;
     
 }

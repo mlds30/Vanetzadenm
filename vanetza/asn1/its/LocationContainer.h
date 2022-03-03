@@ -30,6 +30,7 @@ typedef struct LocationContainer {
 	struct Heading	*eventPositionHeading;	/* OPTIONAL */
 	Traces_t	 traces;
 	RoadType_t	*roadType;	/* OPTIONAL */
+
 	/*
 	 * This type is extensible,
 	 * possible extensions are below.

@@ -22,7 +22,8 @@ public:
     PortType port() override;
     void indicate(const DataIndication&, UpPacketPtr) override;
     Application::PromiscuousHook* promiscuous_hook() override;
-    void print_received_message(bool flag);
+    void print_received_messagec(bool flag);
+    void print_received_messaged(bool flag);
     struct mosquitto *mosq;
     int connetti(char* payload);
 
@@ -34,7 +35,8 @@ private:
     boost::asio::steady_timer m_timer;
     std::chrono::milliseconds m_interval;
     unsigned m_received_messages;
-    bool print_rx_msg_ = false;
+    bool print_rx_msg_c = false;
+    bool print_rx_msg_d = false;
     
 };
 

@@ -39,6 +39,7 @@ typedef struct ManagementContainer {
 	ValidityDuration_t	*validityDuration;	/* DEFAULT 600 */
 	TransmissionInterval_t	*transmissionInterval;	/* OPTIONAL */
 	StationType_t	 stationType;
+	
 	/*
 	 * This type is extensible,
 	 * possible extensions are below.

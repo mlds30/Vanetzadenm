@@ -58,7 +58,10 @@ void print_indented(std::ostream& os, const asn1::Denm& message, const std::stri
     prefix("Latitude") << management.eventPosition.latitude << "\n";
     prefix("Altitude Value") << management.eventPosition.altitude.altitudeValue << "\n";
     prefix("Altitude Confidence") <<  management.eventPosition.altitude.altitudeConfidence << "\n";
-    prefix("Validity Duration") << management.validityDuration << "\n";
+    prefix("Road Segment ID") << management.eventPosition.roadSegmentReferenceID.id << "\n";
+    prefix("Relevance Distance") << *management.relevanceDistance << "\n";
+    prefix("TrafficDirection") << *management.relevanceTrafficDirection << "\n";
+    prefix("Validity Duration") << *management.validityDuration << "\n";
     prefix("Station Type") << management.stationType << "\n";
     --level;
     --level;
@@ -67,8 +70,11 @@ void print_indented(std::ostream& os, const asn1::Denm& message, const std::stri
     const SituationContainer_t* situation = denm.situation;
     ++level;
     prefix("Information Quality") <<  situation->informationQuality << "\n";
+    //prefix("Timestamp") << timestamp << "\n";
+    prefix("CauseCode") <<  situation->eventType.causeCode << "\n";
     prefix("CauseCode") <<  situation->eventType.causeCode << "\n";
     prefix("subCauseCode") <<  situation->eventType.subCauseCode << "\n";
+    //prefix("eventPosition") << *situation->eventHistory.eventPosition.deltaReferencePosition << "\n";
     --level;
 }
 } // namespace facilities

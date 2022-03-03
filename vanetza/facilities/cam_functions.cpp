@@ -330,6 +330,7 @@ void print_indented(std::ostream& os, const asn1::Cam& message, const std::strin
     prefix("Reference Position") << "\n";
     ++level;
     prefix("Longitude") << basic.referencePosition.longitude << "\n";
+    
     prefix("Latitude") << basic.referencePosition.latitude << "\n";
     prefix("Semi Major Orientation") << basic.referencePosition.positionConfidenceEllipse.semiMajorOrientation << "\n";
     prefix("Semi Major Confidence") << basic.referencePosition.positionConfidenceEllipse.semiMajorConfidence << "\n";

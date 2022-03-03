@@ -171,18 +171,9 @@ int main(int argc, const char** argv)
                 };
               // benchmark->print_received_message(vm.count("print-rx-cam") > 0);
                //apps.emplace(app_name, std::move(benchmark));
-               benchmark->print_received_messaged(vm.count("print-rx-denm") > 0);
+               benchmark->print_received_message(vm.count("print-rx-denm") > 0);
                apps.emplace(app_name, std::move(benchmark));
-            } else if (app_name == "benchmark_cam") {
-                std::unique_ptr<BenchmarkApplication> benchmark {
-                    new BenchmarkApplication(io_service)
-                };
-              benchmark->print_received_messagec(vm.count("print-rx-cam") > 0);
-               apps.emplace(app_name, std::move(benchmark));
-               //benchmark->print_received_message(vm.count("print-rx-denm") > 0);
-               //apps.emplace(app_name, std::move(benchmark));
-            }
-             else {
+            } else {
                 std::cerr << "skip unknown application '" << app_name << "'\n";
             }
         }

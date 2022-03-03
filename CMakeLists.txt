@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.1)
 project(Vanetza VERSION 0.8)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
+
 # enable convenient CMake policies if available
 if(POLICY CMP0074)
   # find_package() employs <package>_ROOT (since CMake 3.12)
@@ -81,6 +82,20 @@ add_subdirectory(vanetza/net)
 add_subdirectory(vanetza/security)
 add_subdirectory(vanetza/units)
 add_subdirectory(tools/proxy_fake_feed)
+
+# Your-external "mylib", add GLOBAL if the imported library is located in directories above the current.
+#add_library( libjsoncpp-dev SHARED IMPORTED GLOBAL)
+# You can define two import-locations: one for debug and one for release.
+#set_target_properties( libjsoncpp-dev PROPERTIES IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/res/mylib.so )
+
+
+#if (TARGET jsoncpp_static)
+#    add_library(JsonCpp::JsonCpp INTERFACE IMPORTED)
+#    set_target_properties(JsonCpp::JsonCpp PROPERTIES INTERFACE_LINK_LIBRARIES "jsoncpp_static")
+#elseif (TARGET jsoncpp_lib)
+#    add_library(JsonCpp::JsonCpp INTERFACE IMPORTED)
+#    set_target_properties(JsonCpp::JsonCpp PROPERTIES INTERFACE_LINK_LIBRARIES "jsoncpp_lib")
+#endif ()
 
 if(TARGET Cohda::headers)
   add_subdirectory(tools/cohda_proxy)
